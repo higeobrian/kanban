@@ -1,5 +1,6 @@
 let router = require('express').Router()
 var Board = require('../models/board')
+var User = require('../models/user')
 
 //GET BY ID
 router.get('/api/boards/:id', (req, res, next)=>{
@@ -11,10 +12,23 @@ router.get('/api/boards/:id', (req, res, next)=>{
         res.status(400).send(err)
       })
   })
+
+  //Get Users Boards  VUE REQUEST api.get('/boards/')
+  router.get('/api/boards', (req, res, next)=>{
+    Board.find({userId: req.session.uid})
+    .then(boards=>{
+        res.send(boards)
+    })
+    .catch(err=>{
+        res.status(500).send(err)
+    })
+  })
   
+
   //ADD
   router.post('/api/boards/', (req, res, next) => {
     var board = req.body
+    board.userId = req.session.uid
     Board.create(board)
       .then(newBoard => {
         res.status(200).send(newBoard)

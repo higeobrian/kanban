@@ -12,9 +12,26 @@ router.get('/api/lists/:id', (req, res, next)=>{
       })
   })
   
+  router.get('/api/lists', (req, res, next)=>{
+      console.log(req)
+    List.find({boardId: req.session.uid})
+    .then(boards=>{
+        res.send(boards)
+    })
+    .catch(err=>{
+        res.status(500).send(err)
+    })
+  })
+
+// "userId": "5b0dc102a6a35b187c3e6091", 
+// "boardId": "5b0dc2bbe29d2544b4c7e98f"
+
   //ADD
   router.post('/api/lists', (req, res, next) => {
     var list = req.body
+    console.log(req.session)
+    list.userId = req.session.uid
+    list.boardId = "5b0dc2bbe29d2544b4c7e98f"
     List.create(list)
       .then(newList => {
         res.status(200).send(newList)

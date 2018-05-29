@@ -30,6 +30,7 @@ var tasks = require('./server-assets/routes/task')
 //app.use(users.router)
 //app.use(songs.router)
 app.use(boards.router)
+app.use(lists.router)
 
 
 //catch all
