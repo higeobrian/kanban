@@ -29,9 +29,9 @@ router.get('/api/lists/:id', (req, res, next)=>{
   //ADD
   router.post('/api/lists', (req, res, next) => {
     var list = req.body
-    console.log(req.session)
+    console.log(list)
     list.userId = req.session.uid
-    list.boardId = "5b0dc2bbe29d2544b4c7e98f"
+    // list.boardId = "5b0dc2bbe29d2544b4c7e98f"
     List.create(list)
       .then(newList => {
         res.status(200).send(newList)
