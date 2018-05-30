@@ -4,7 +4,18 @@ var app = express()
 var cors = require('cors')
 var port = 3000
 
-app.use(cors())
+var whitelist = ['http://localhost:8080'];
+var corsOptions = {
+  origin: function(origin, callback){
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, originIsWhitelisted)
+  },
+  credentials: true
+}
+
+
+
+app.use(cors(corsOptions))
 
 require('./server-assets/db/mlab-config')
 
@@ -14,6 +25,16 @@ app.use(bp.urlencoded({ extended: true }))
 var auth = require('./server-assets/auth/routes')
 app.use(auth.session)
 app.use(auth.router)
+
+
+
+app.use((req, res, next)=>{
+  if(!req.session.uid){
+    return res.status(401).send({
+      error: 'please login to continue'
+    })
+  }
+})
 
 //var users = require('./server-assets/routes/users')
 //var songs = require('./server-assets/routes/songs')

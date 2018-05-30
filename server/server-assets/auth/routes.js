@@ -10,7 +10,6 @@ router.post('/auth/register', (req, res) => {
       error: 'Password must be at least 6 characters'
     })
   }
-  req.body.role = 'guest'
   req.body.hash = Users.generateHash(req.body.password)
   Users.create(req.body)
     .then(user => {
@@ -35,7 +34,7 @@ router.post('/auth/login', (req, res) => {
       if (!user.validatePassword(req.body.password)) {
         return res.status(400).send(loginError)
       }
-      delete user._doc.hash
+      delete user._doc.password
       req.session.uid = user._id
       res.send(user)
     }).catch(err => {
@@ -54,9 +53,6 @@ router.delete('/auth/logout', (req, res) => {
   })
 })
 
-
-
-
 router.get('/authenticate', (req, res) => {
   Users.findById(req.session.uid)
     .then(user => {
@@ -65,7 +61,7 @@ router.get('/authenticate', (req, res) => {
           error: 'Please login to continue'
         })
       }
-      delete user._doc.hash
+      delete user._doc.password
       res.send(user)
     }).catch(err => {
       res.status(500).send(err)

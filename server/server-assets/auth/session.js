@@ -12,7 +12,7 @@ store.on("error", function(err) {
 
 // @ts-ignore
 var session = expressSession({
-  secret: "wh0000000 l<3ves a pineapple in the SKY DIAMONtes!!!", //CHANGE ME!!!!
+  secret: "We are the knights who say icky icky pickang knee womb!!", //CHANGE ME!!!!
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7 * 52 * 2,
   },

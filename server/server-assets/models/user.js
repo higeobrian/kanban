@@ -7,7 +7,7 @@ var SALT = 12
 var userSchema = new Schema ({
     name: {type: String, required: true},
     password: {type: String, required: true},
-    hash: {type: String, required: true}
+ //   hash: {type: String, required: true}
 
     // email: {type: Email, required: true}
 })
@@ -16,7 +16,7 @@ userSchema.statics.generateHash = function (password){
 } 
 
 userSchema.methods.validatePassword = function (password) {
-    return bcrypt.compare(password, this.hash)
+    return bcrypt.compare(password, this.password)
   }
 
 
