@@ -11,18 +11,19 @@ let api = axios.create({
 })
 
 let auth = axios.create({
-    baseURL: 'http://localhost:3000/auth',
+    baseURL: 'http://localhost:3000',
     timeout: 3000,
     withCredentials: true
 })
-
-
 
 vue.use(vuex)
 
 export default new vuex.Store({
     state: {
-        user:{}
+        user:{},
+        board:[],
+        task: [],
+        list: []
     },
     mutations: {
         setUser(state, user) {
@@ -30,14 +31,19 @@ export default new vuex.Store({
         },
         deleteUser(state){
             state.user = {}
-        }
+        },
     },
     actions: {
         login({commit, dispatch}, loginCredentials){
-            auth.post('login', loginCredentials)
+            console.log(loginCredentials)
+            auth.post('/auth/login', loginCredentials)
             .then(res=>{
+                console.log(res)
                 commit('setUser', res.data)
                 router.push({name: 'Home'})
+            })
+            .catch(res=>{
+                
             })
         },
         logout({commit, dispatch}){},
@@ -45,11 +51,20 @@ export default new vuex.Store({
         authenticate({commit, dispatch}){
             api.get('/authenticate')
             .then(res=>{
+                console.log('auth success')
                 commit('setUser', res.data)
                 router.push({name: 'Home'})
             })
             .catch(res=>{})          
+        },
+
+        createBoard({commit, dispatch}, board){
+            api.post('/api/boards/', board)
+            .then(res=>{
+                console.log(res)
+            })
         }
+
 
     }
 

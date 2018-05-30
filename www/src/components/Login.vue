@@ -1,10 +1,10 @@
 <template>
-  <div class="Login">
+  <div class="userLogin">
    
    <form @submit.prevent="userLogin">
-    <input type="email" name="email" id="email">
-    <input type="text" name="password" id="password">      
-       <button type="submit">LOGIN</button>
+    <input type="email" name="email" id="email" placeholder="Enter email" v-model="login.email">
+    <input type="text" name="password" id="password" placeholder="Enter password" v-model="login.password">      
+    <button type="submit">LOGIN</button>
    </form>
 
 

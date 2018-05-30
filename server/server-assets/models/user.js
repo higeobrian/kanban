@@ -7,7 +7,8 @@ var SALT = 12
 var userSchema = new Schema ({
     name: {type: String, required: true},
     password: {type: String, required: true},
- //   hash: {type: String, required: true}
+    email: {type:String, required: true, dropUps: true},
+    created: {type: Number, required: true, default: Date.now()}
 
     // email: {type: Email, required: true}
 })

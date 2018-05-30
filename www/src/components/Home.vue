@@ -1,7 +1,9 @@
 <template>
   <div class="Home">
-   
-
+  
+<board></board>
+  
+    <p>Freeze mother bitches</p>
   </div>
 </template>
 
@@ -10,13 +12,23 @@ import router from '../router'
 import board from './Board'
 import list from './List'
 import task from './Task'
+import login from './Login'
+
 
 export default {
   name: 'Home',
   components:{
     board, 
     list, 
-    task
+    task,
+    login,
+  },
+
+
+
+
+  computed:{
+   
   },
   mounted(){
     if(!this.$store.state.user._id){// if no user id kick to the Login page
@@ -27,6 +39,10 @@ export default {
     return {
       
     }
+  }, 
+
+  methods:{
+   
   }
 }
 </script>

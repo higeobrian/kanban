@@ -23,9 +23,7 @@ router.post('/auth/register', (req, res) => {
 })
 
 router.post('/auth/login', (req, res) => {
-  Users.findOne({
-      username: req.body.username
-    })
+  Users.findOne({email: req.body.email})
     .then(user => {
       if (!user) {
         return res.status(400).send(loginError)
