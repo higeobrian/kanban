@@ -1,15 +1,15 @@
 
 <template>
   <div class="Board">
-    <div>{{}}</div>
+    <div></div>
  <form @submit.prevent="createList">
     <input type="title" name="title" id="title" placeholder="Enter title" v-model="list.title">
     <input type="body" name="body" id="body" placeholder="Enter body" v-model="list.body">      
     <button type="submit">Create List</button>
    </form>      
  <ul>
-    <li v-for="list in lists" :key="list.id">
-      <lists :list='list'></lists>
+    <li v-for="list in lists" :key="list._id">
+      <lists :myList="list"></lists> 
     </li>
 
   </ul>
@@ -20,38 +20,46 @@
 
 <script>
 import router from "../router";
-import lists from "./List";
-
+//import boardLists from "./List";
+import lists from "./List"
 export default {
   name: "Board",
-  props: ["boardId"],
+ // props: ["boardId"],
   data() {
     return {
-      list: { boardId: this.$route.params.boardId }
+      list: { title: '',
+      body: '', 
+     }
     };
   },
-  mounted() {},
+  mounted() {
+    debugger
+     this.$store.dispatch("getLists", this.$route.params.boardId)
+  },
   computed: {
     user() {
       var user = this.$store.state.user;
       console.log(user);
       return user;
     },
-    board() {
-      var board = this.$store.state.activeBoard;
-      console.log(board);
-      return board;
-    },
+    // board() {
+    //   var board = this.$store.state.activeBoard;
+    //   return board;
+    // },
     lists() {
-      return this.$store.state.boardLists;
+      return this.$store.state.lists;
     }
   },
   methods: {
     createList() {
+   
+      this.list['boardId'] = this.$route.params.boardId
+   //   console.log(this.list)
       this.$store.dispatch("createList", this.list);
     }
   },
   components: {
+    
     lists
   }
 };

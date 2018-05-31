@@ -39,7 +39,14 @@ export default new vuex.Store({
         }, 
         displayBoards(state, boards){
             state.boards = boards
+        },
+        createList(state, list){
+            state.lists.push(list)
+        },
+        getList(state, list){
+            state.lists = list
         }
+
     },
     actions: {
         login({commit, dispatch}, loginCredentials){
@@ -85,9 +92,34 @@ export default new vuex.Store({
                 commit('displayBoards', res.data)
             })
         },
-        createList({commit, dispatch}, boardId){
-            api.post('/api/')
+        createList({commit, dispatch}, board){
+          //  debugger
+            console.log(board)
+            api.post('/api/lists', board)
+            .then(res=>{
+                console.log(res.data)
+                commit('createList', res.data)
+            })
+        }, 
+        getLists({commit, dispatch}, boardId){
+            console.log(boardId)
+            api.get('/api/boards/' + boardId + '/lists')
+            .then(res=> {
+                console.log(res)
+                commit('getList', res.data)
+            })
+        },
+        createTask({commit, dispatch}, song){
+            console.log(song)
+            api.post('/api/tasks', song)
+            .then(res=>{
+                console.log(res)
+            })
+
         }
+
+
+
 
 
 

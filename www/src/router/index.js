@@ -22,7 +22,7 @@ export default new Router({
       component: Login
    },
    {
-    path: '/board',
+    path: '/board/:boardId',
       name: 'Board',
       component: Board
    },
@@ -32,7 +32,7 @@ export default new Router({
       component: Task
    },
    {
-    path: '/list',
+    path: '/list/:listId',
       name: 'List',
       component: List
    }
