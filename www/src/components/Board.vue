@@ -33,7 +33,7 @@ export default {
     };
   },
   mounted() {
-    debugger
+   
      this.$store.dispatch("getLists", this.$route.params.boardId)
   },
   computed: {

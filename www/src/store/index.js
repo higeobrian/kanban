@@ -45,7 +45,11 @@ export default new vuex.Store({
         },
         getList(state, list){
             state.lists = list
+        },
+        createTask(state, task){
+            state.tasks.push(task)
         }
+
 
     },
     actions: {
@@ -93,7 +97,7 @@ export default new vuex.Store({
             })
         },
         createList({commit, dispatch}, board){
-          //  debugger
+           debugger
             console.log(board)
             api.post('/api/lists', board)
             .then(res=>{
@@ -109,11 +113,13 @@ export default new vuex.Store({
                 commit('getList', res.data)
             })
         },
-        createTask({commit, dispatch}, song){
-            console.log(song)
-            api.post('/api/tasks', song)
+        createTask({commit, dispatch}, list){
+            console.log(list)
+            debugger
+            api.post('/api/tasks', list)
             .then(res=>{
                 console.log(res)
+                commit('createTask', res.data)
             })
 
         }

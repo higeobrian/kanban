@@ -14,6 +14,9 @@ router.get('/api/tasks/:id', (req, res, next)=>{
   
   //ADD
   router.post('/api/tasks', (req, res, next) => {
+    debugger
+    console.log(req)
+    debugger
     var task = req.body
     Task.create(task)
       .then(newTask => {
