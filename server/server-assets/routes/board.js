@@ -14,7 +14,7 @@ router.get('/api/boards/:id', (req, res, next)=>{
   })
 
   //Get Users Boards  VUE REQUEST api.get('/boards/')
-  router.get('/api/boards', (req, res, next)=>{
+  router.get('/api/boards/user/:id', (req, res, next)=>{
     Board.find({userId: req.session.uid})
     .then(boards=>{
         res.send(boards)
@@ -26,8 +26,9 @@ router.get('/api/boards/:id', (req, res, next)=>{
   
 
   //ADD
-  router.post('/api/boards/', (req, res, next) => {
+  router.post('/api/boards', (req, res, next) => {
     var board = req.body
+    console.log(board)
     board.userId = req.session.uid
     Board.create(board)
       .then(newBoard => {

@@ -21,9 +21,11 @@ vue.use(vuex)
 export default new vuex.Store({
     state: {
         user:{},
-        board:[],
-        task: [],
-        list: []
+        boards:[],
+        activeBoard:[],
+        tasks: [],
+        lists: [],
+        boardLists: []
     },
     mutations: {
         setUser(state, user) {
@@ -32,6 +34,12 @@ export default new vuex.Store({
         deleteUser(state){
             state.user = {}
         },
+        createBoard(state, board){ //may not be correct
+            state.boards.push(board) 
+        }, 
+        displayBoards(state, boards){
+            state.boards = boards
+        }
     },
     actions: {
         login({commit, dispatch}, loginCredentials){
@@ -59,11 +67,28 @@ export default new vuex.Store({
         },
 
         createBoard({commit, dispatch}, board){
-            api.post('/api/boards/', board)
+
+            // board.userId = this.user.userId
+            console.log(this.user)
+            console.log(board)
+             api.post('/api/boards/', board)
             .then(res=>{
-                console.log(res)
+                console.log(res.data)
+                commit('createBoard', res.data)
             })
+            
+        },
+        getBoards({commit, dispatch}, userId){
+            api.get('/api/boards/user/'+ userId)
+            .then(res=>{
+                console.log(res.data)
+                commit('displayBoards', res.data)
+            })
+        },
+        createList({commit, dispatch}, boardId){
+            api.post('/api/')
         }
+
 
 
     }

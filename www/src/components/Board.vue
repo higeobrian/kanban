@@ -1,51 +1,66 @@
 
 <template>
   <div class="Board">
-    <form @submit.prevent="createBoard">
-    <input type="title" name="title" id="title" placeholder="Enter title" v-model="board.title">
-    <input type="body" name="body" id="body" placeholder="Enter body" v-model="board.body">      
-    <button type="submit">Create Board</button>
-   </form>
+    <div>{{}}</div>
+ <form @submit.prevent="createList">
+    <input type="title" name="title" id="title" placeholder="Enter title" v-model="list.title">
+    <input type="body" name="body" id="body" placeholder="Enter body" v-model="list.body">      
+    <button type="submit">Create List</button>
+   </form>      
+ <ul>
+    <li v-for="list in lists" :key="list.id">
+      <lists :list='list'></lists>
+    </li>
+
+  </ul>
+ 
+
   </div>
 </template>
 
 <script>
+import router from "../router";
+import lists from "./List";
+
 export default {
-  name: 'Board',
-  data () {
+  name: "Board",
+  props: ["boardId"],
+  data() {
     return {
-        board:{
-            title: '',
-            body: '',
-            userId: ''
-        }
+      list: { boardId: this.$route.params.boardId }
+    };
+  },
+  mounted() {},
+  computed: {
+    user() {
+      var user = this.$store.state.user;
+      console.log(user);
+      return user;
+    },
+    board() {
+      var board = this.$store.state.activeBoard;
+      console.log(board);
+      return board;
+    },
+    lists() {
+      return this.$store.state.boardLists;
     }
   },
-
-computed:{
-    user(){
-     var user = this.$store.state.user
-     console.log(user)
-     return user
+  methods: {
+    createList() {
+      this.$store.dispatch("createList", this.list);
     }
-    // boards(){
-    //   var board = this.$store.state.board
-    //   return board
-    // }
   },
-  methods:{
-       createBoard(){
-        this.$store.dispatch('createBoard', this.board)
-     }
+  components: {
+    lists
   }
-
-
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {

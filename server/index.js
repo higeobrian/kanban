@@ -29,11 +29,13 @@ app.use(auth.router)
 
 
 app.use((req, res, next)=>{
+  console.log(req)
   if(!req.session.uid){
     return res.status(401).send({
       error: 'please login to continue'
     })
   }
+  next()
 })
 
 //var users = require('./server-assets/routes/users')
