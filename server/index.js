@@ -5,7 +5,6 @@ let server = require('http').createServer(app)
 var cors = require('cors')
 var port = process.env.PORT || 3000
 
-app.use(express.static(__dirname + "/../www/dist"))
 
 var whitelist = ['http://localhost:8080', 'http://kanban-fun.herokuapp.com'];
 var corsOptions = {
@@ -16,8 +15,9 @@ var corsOptions = {
   credentials: true
 }
 
-
 app.use(cors(corsOptions))
+
+app.use(express.static(__dirname + "/../www/dist"))
 
 require('./server-assets/db/mlab-config')
 
