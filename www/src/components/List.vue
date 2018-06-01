@@ -7,7 +7,12 @@
     <button type="submit">Create Task</button>
    </form> 
 
-
+<ul>
+  <li v-for="task in tasks" :key="task._id">
+      <tasks :myTask="task"></tasks> 
+    </li>
+  </ul>
+  
   </div>
 </template>
 
@@ -21,32 +26,39 @@ export default {
   props: ["myList"],
   data() {
     return {
-      task: {}
+      task: {title: '',
+      body: ''}
        
     };
+  }, 
+  mounted() {
+   
+   //  this.$store.dispatch("getTasks", this.$route.params.listId)// doesnt work because we cant find a listId
   },
   computed:{
-      user() {
-      var user = this.$store.state.user;
-      console.log(user);
-      return user;
-    },
+      // user() {
+      // var user = this.$store.state.user;
+      // console.log(user);
+      // return user;
+    // },
+    
     // board() {
     //   var board = this.$store.state.activeBoard;
     //   return board;
     // },
-    lists() {
-      return this.$store.state.lists;
-    },
+    // lists() {
+    //   return this.$store.state.lists;
+    // },
     tasks() {
-      return this.$store.state.tasks;
+      return this.$store.state.tasks
     },
   },
   methods:{
     createTask(){
       debugger
-        this.task['boardId'] = this.$route.params.boardId
-        console.log(this.$route.params.userId)
+        // this.task['boardId'] = this.$route.params.boardId
+        // this.task['ListId'] = this.$route.params.listId
+      //  console.log(this.$route.params.userId)
         this.$store.dispatch("createTask", this.task);
     }
   },

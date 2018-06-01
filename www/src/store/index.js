@@ -3,6 +3,11 @@ import vuex from 'vuex'
 import router from '../router'
 import axios from 'axios'
 
+var production = !window.location.host.includes('localhost');
+var baseUrl = production ? '//kanban-fun.herokuapp.com/' : '//localhost:3000';
+
+
+
 let api = axios.create({
     baseURL: 'http://localhost:3000',
     timeout: 3000,
@@ -118,11 +123,16 @@ export default new vuex.Store({
             debugger
             api.post('/api/tasks', list)
             .then(res=>{
+                debugger
                 console.log(res)
                 commit('createTask', res.data)
+
+            }).catch(err=>{ 
+                console.error(err)
             })
 
-        }
+        },
+        
 
 
 

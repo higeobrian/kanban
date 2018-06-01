@@ -54,7 +54,7 @@ export default {
     createList() {
    
       this.list['boardId'] = this.$route.params.boardId
-   //   console.log(this.list)
+    console.log(this.list)
       this.$store.dispatch("createList", this.list);
     }
   },
