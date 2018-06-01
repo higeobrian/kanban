@@ -4,7 +4,9 @@ var app = express()
 var cors = require('cors')
 var port = 3000
 
-var whitelist = ['http://localhost:8080'];
+app.use(express.static(__dirname + "/../www/dist"))
+
+var whitelist = ['http://localhost:8080', 'http://kanban-fun.herokuapp.com'];
 var corsOptions = {
   origin: function(origin, callback){
     var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
@@ -12,7 +14,6 @@ var corsOptions = {
   },
   credentials: true
 }
-
 
 
 app.use(cors(corsOptions))
@@ -54,6 +55,7 @@ var tasks = require('./server-assets/routes/task')
 //app.use(songs.router)
 app.use(boards.router)
 app.use(lists.router)
+app.use(tasks.router)
 
 
 //catch all
