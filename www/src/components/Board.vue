@@ -20,11 +20,10 @@
 
 <script>
 import router from "../router";
-//import boardLists from "./List";
 import lists from "./List"
+
 export default {
   name: "Board",
- // props: ["boardId"],
   data() {
     return {
       list: { title: '',
@@ -33,8 +32,7 @@ export default {
     };
   },
   mounted() {
-   
-     this.$store.dispatch("getLists", this.$route.params.boardId)
+    this.$store.dispatch("getLists", this.$route.params.boardId)
   },
   computed: {
     user() {

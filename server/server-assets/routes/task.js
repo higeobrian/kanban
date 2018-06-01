@@ -12,11 +12,20 @@ router.get('/api/tasks/:id', (req, res, next)=>{
       })
   })
   
+  router.get('/api/lists/:listId/tasks', (req, res, next)=>{
+    Task.find({listId:req.params.listId})
+      .then(tasks =>{
+        res.status(200).send(tasks)
+      })
+      .catch(err => {
+        res.status(400).send(err)
+      })
+  })
   //ADD
   router.post('/api/tasks', (req, res, next) => {
    
-    console.log(req)
-   // debugger
+    console.log(req.body)
+    debugger
     var task = req.body
     Task.create(task)
       .then(newTask => {

@@ -28,7 +28,7 @@ export default new vuex.Store({
         user:{},
         boards:[],
         activeBoard:[],
-        tasks: [],
+        tasks: {},
         lists: [],
         boardLists: []
     },
@@ -53,6 +53,11 @@ export default new vuex.Store({
         },
         createTask(state, task){
             state.tasks.push(task)
+        },
+        setTasks(state, tasks){
+            if(tasks[0]){
+                state.tasks[tasks[0].listId] = tasks 
+            }
         }
 
 
@@ -85,8 +90,8 @@ export default new vuex.Store({
         createBoard({commit, dispatch}, board){
 
             // board.userId = this.user.userId
-            console.log(this.user)
-            console.log(board)
+            // console.log(this.user)
+            // console.log(board)
              api.post('/api/boards/', board)
             .then(res=>{
                 console.log(res.data)
@@ -101,30 +106,30 @@ export default new vuex.Store({
                 commit('displayBoards', res.data)
             })
         },
-        createList({commit, dispatch}, board){
-           debugger
-            console.log(board)
-            api.post('/api/lists', board)
+        createList({commit, dispatch}, list){
+        //   debugger
+          //  console.log(list)
+            api.post('/api/lists', list)
             .then(res=>{
                 console.log(res.data)
                 commit('createList', res.data)
             })
         }, 
         getLists({commit, dispatch}, boardId){
-            console.log(boardId)
+         //   console.log(boardId)
             api.get('/api/boards/' + boardId + '/lists')
             .then(res=> {
-                console.log(res)
+            //    console.log(res)
                 commit('getList', res.data)
             })
         },
-        createTask({commit, dispatch}, list){
-            console.log(list)
-            debugger
-            api.post('/api/tasks', list)
+        createTask({commit, dispatch}, task){
+           console.log(task)
+         //   debugger
+            api.post('/api/tasks', task)
             .then(res=>{
-                debugger
-                console.log(res)
+              //  debugger
+             //   console.log(res)
                 commit('createTask', res.data)
 
             }).catch(err=>{ 
@@ -132,6 +137,18 @@ export default new vuex.Store({
             })
 
         },
+        getTasks({commit, dispatch}, listId){
+            var ghost = listId
+            console.log(ghost)
+            
+            api.get('/api/lists/' + listId +'/tasks')
+                .then(res=>{
+                  
+                    console.log(res)
+                    commit('setTasks', res.data)
+                })
+         }
+        
         
 
 

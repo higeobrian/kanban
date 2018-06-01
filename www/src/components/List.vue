@@ -9,7 +9,8 @@
 
 <ul>
   <li v-for="task in tasks" :key="task._id">
-      <tasks :myTask="task"></tasks> 
+    <tasks :myTask="task"></tasks>  
+      
     </li>
   </ul>
   
@@ -33,7 +34,7 @@ export default {
   }, 
   mounted() {
    
-   //  this.$store.dispatch("getTasks", this.$route.params.listId)// doesnt work because we cant find a listId
+  this.$store.dispatch("getTasks", this.myList._id)// doesnt work because we cant find a listId
   },
   computed:{
       // user() {
@@ -41,6 +42,7 @@ export default {
       // console.log(user);
       // return user;
     // },
+    
     
     // board() {
     //   var board = this.$store.state.activeBoard;
@@ -50,7 +52,7 @@ export default {
     //   return this.$store.state.lists;
     // },
     tasks() {
-      return this.$store.state.tasks
+      return this.$store.state.tasks[this.myList._id]
     },
   },
   methods:{
@@ -59,8 +61,11 @@ export default {
         // this.task['boardId'] = this.$route.params.boardId
         // this.task['ListId'] = this.$route.params.listId
       //  console.log(this.$route.params.userId)
-        this.$store.dispatch("createTask", this.task);
+      var newTask = this.task
+      newTask.listId = this.myList._id //assigning an id to the task that assocaites to the list
+      this.$store.dispatch("createTask", newTask);
     }
+
   },
   components: {
     tasks

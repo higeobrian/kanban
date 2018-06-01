@@ -10,7 +10,7 @@ var taskSchema = new Schema ({
     body: {type: String, required: true},
   //  boardId: {type: ObjectId, ref: 'Board', require: true},
     // userId: {type: ObjectId, ref: 'User', require: true},
-  //  listId: {type: ObjectId, ref: 'List', require: true}
+    listId: {type: ObjectId, ref: 'List', require: true}
 })
 
 
