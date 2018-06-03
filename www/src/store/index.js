@@ -52,11 +52,15 @@ export default new vuex.Store({
             state.lists = list
         },
         createTask(state, task){
-            state.tasks.push(task)
+            //state.tasks.push(task)
+            state.tasks = task
         },
         setTasks(state, tasks){
-            if(tasks[0]){
-                state.tasks[tasks[0].listId] = tasks 
+            console.log(tasks)
+            // debugger
+            if(tasks[0]){ //taking the first element and grabbing the listId from it
+                state.tasks[tasks[0].listId] = tasks
+                // console.log('This one', state.tasks)
             }
         }
 
@@ -130,8 +134,8 @@ export default new vuex.Store({
             .then(res=>{
               //  debugger
              //   console.log(res)
-                commit('createTask', res.data)
-
+             //  commit('createTask', res.data)
+                    dispatch('getTasks', task.listId )
             }).catch(err=>{ 
                 console.error(err)
             })
@@ -145,6 +149,7 @@ export default new vuex.Store({
                 .then(res=>{
                   
                     console.log(res)
+                    // debugger
                     commit('setTasks', res.data)
                 })
          }

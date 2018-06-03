@@ -32,7 +32,7 @@ export default new Router({
       component: Task
    },
    {
-    path: '/list/:listId',
+    path: '/list/',
       name: 'List',
       component: List
    }
