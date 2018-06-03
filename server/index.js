@@ -6,6 +6,8 @@ var cors = require('cors')
 var port = process.env.PORT || 3000
 
 
+//Changes by brian will be added
+
 var whitelist = ['http://localhost:8080', 'http://kanban-fun.herokuapp.com'];
 var corsOptions = {
   origin: function(origin, callback){
