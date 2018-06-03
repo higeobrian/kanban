@@ -79,8 +79,25 @@ export default new vuex.Store({
                 
             })
         },
-        logout({commit, dispatch}){},
-        register({commit, dispatch}, userData){},
+
+        //Brian ADded logout/register double check..
+        
+        logout({commit, dispatch}){
+            auth.delete('/logout') 
+            .then(res=>{
+                commit('deleteUser')
+                router.push({name: 'login'})
+            })
+        },
+
+
+        register({commit, dispatch}, userData){
+            auth.post('register', userData) 
+            .then(res=>{
+                commit('setUser', res.data)
+                router.push({name: 'Home'})
+            })
+        },
         authenticate({commit, dispatch}){
             api.get('/authenticate')
             .then(res=>{
@@ -151,7 +168,22 @@ export default new vuex.Store({
                     console.log(res)
                     // debugger
                     commit('setTasks', res.data)
-                })
+                }), 
+            
+            //     createComment({commit, dispatch}, comment){
+            //     api.post('/api/comments', comment)
+            //     .then(res=>{
+            //         dispatch('getComments', comment.taskId)
+            //     })
+            //     .catch(err=>{
+            //         console.err(err)
+            //     })
+            // },
+
+            // getComments({commit, dispatch}, taskId){
+
+            // }
+            
          }
         
         
