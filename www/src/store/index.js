@@ -81,7 +81,6 @@ export default new vuex.Store({
         },
 
         //Brian ADded logout/register double check..
-        
         logout({commit, dispatch}){
             auth.delete('/logout') 
             .then(res=>{
