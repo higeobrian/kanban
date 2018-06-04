@@ -42,23 +42,18 @@ app.use((req, res, next)=>{
   next()
 })
 
-//var users = require('./server-assets/routes/users')
+// var users = require('./server-assets/routes/users')
 var boards = require('./server-assets/routes/board')
 var lists = require('./server-assets/routes/list')
 var comments = require('./server-assets/routes/comment')
 var tasks = require('./server-assets/routes/task')
 
 
-
-
-
-
-
-//app.use(users.router)
+// app.use(users.router)
 app.use(boards.router)
 app.use(lists.router)
 app.use(tasks.router)
-//app.use(comments.router)
+app.use(comments.router)
 
 //catch all
 app.get('*', (req, res, next) => {

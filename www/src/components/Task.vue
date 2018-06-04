@@ -32,6 +32,7 @@
               <option value="fiat">Fiat</option>
               <option value="audi">Audi</option>
             </select>
+            //drop down with selection. 
       
           <button>SWITCH LIST</button>
           <div v-for="task in tasks" :key="task._id"></div>
@@ -103,7 +104,7 @@ export default {
         this.$store.dispatch('getLists')
       },
     moveTask(){
-
+      //To move this task we need to edit the listId right? dispatch.. update the state task.
     }
   }
 }

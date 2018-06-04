@@ -6,8 +6,6 @@ import axios from 'axios'
 var production = !window.location.host.includes('localhost');
 var baseUrl = production ? '//kanban-fun.herokuapp.com/' : '//localhost:3000';
 
-
-
 let api = axios.create({
     baseURL: 'http://localhost:3000',
     timeout: 3000,
@@ -30,7 +28,8 @@ export default new vuex.Store({
         activeBoard:[],
         tasks: {},
         lists: [],
-        boardLists: []
+        boardLists: [], 
+        comment: {}
     },
     mutations: {
         setUser(state, user) {
@@ -61,8 +60,14 @@ export default new vuex.Store({
             if(tasks[0]){ //taking the first element and grabbing the listId from it
                 state.tasks[tasks[0].listId] = tasks
                 // console.log('This one', state.tasks)
-            }
-        }
+            }          
+        },
+        setComments(state, comments) {
+            state.comments = comments
+        },
+        deleteComment(state) {
+            state.comment = {}
+        }, 
 
 
     },
@@ -155,7 +160,6 @@ export default new vuex.Store({
             }).catch(err=>{ 
                 console.error(err)
             })
-
         },
         getTasks({commit, dispatch}, listId){
             var ghost = listId
@@ -167,8 +171,29 @@ export default new vuex.Store({
                     console.log(res)
                     // debugger
                     commit('setTasks', res.data)
-                }), 
-            
+                })
+            },
+            getComments({dispatch, commit}, taskId) { //by taskId
+                api.get('/api/comments/' + taskId)  //api/comments/:id 
+                  .then(res => {
+                    console.log(res)
+                    commit('setComments',// don't know what goes here.) //need to finish mutations..
+                  )
+                  })
+                  .catch(err => console.log(err))
+              },
+          
+        
+                deleteComment({dispatch, commit}, comment) {
+                    api.delete('/api/comments/' + comment._id) //api/comments/:id
+                      .then(res => {
+                        console.log(res) //right?
+                        dispatch('getComments', comment.taskId) 
+                      })
+                      .catch(err => console.log(err))
+                  },
+
+
             //     createComment({commit, dispatch}, comment){
             //     api.post('/api/comments', comment)
             //     .then(res=>{

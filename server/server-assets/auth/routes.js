@@ -66,9 +66,6 @@ router.get('/authenticate', (req, res) => {
     })
 })
 
-
-
-
 module.exports = {
   router,
   session
